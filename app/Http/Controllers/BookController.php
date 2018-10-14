@@ -9,7 +9,7 @@ use App\Models\Book;
 class BookController extends Controller
 {
     public function getBook ( $name ) {
-        $book = Book::firstOrCreate(['name' => $name]);
+        $book = Book::with('leaves')->firstOrCreate(['name' => $name]);
         return response()->json($book, 200);
     }
 }

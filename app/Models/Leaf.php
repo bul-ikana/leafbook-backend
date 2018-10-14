@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Book;
 
 class Leaf extends Model
 {
+    use SoftDeletes;
+
+    protected $database = 'leaves';
     protected $fillable = [
         'title',
         'content',
