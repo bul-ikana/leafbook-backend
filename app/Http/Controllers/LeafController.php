@@ -69,6 +69,13 @@ class LeafController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $leaf = Leaf::find($id);
+
+        if ( $leaf ) {
+            $leaf->delete();
+            return response()->json('', 204);
+        } else {
+            abort(404);
+        }
     }
 }
