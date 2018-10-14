@@ -11,6 +11,8 @@ use App\Models\Leaf;
 
 class LeafTest extends TestCase
 {
+    use WithFaker, RefreshDatabase;
+
     public function testLeafIsCreated () {
         $book = factory(Book::class)->create();
         $leaf = factory(Leaf::class)->raw();
@@ -28,5 +30,27 @@ class LeafTest extends TestCase
             ->assertStatus(201)
             ->assertJsonFragment(['title'   =>  $leaf['title']])
             ->assertJsonFragment(['content' =>  $leaf['content']]);
+    }
+
+    public function testLeafIsUpdated () {
+        $book = factory(Book::class)->create();
+        $leaf = factory(Leaf::class)->create();
+        $newTitle = $this->faker->sentence(3);
+
+        $response = $this->put(
+            'api/leaves/' . $leaf->id,
+            [
+                'title' => $newTitle
+            ],
+            [
+                "Content-Type" => "application/x-www-form-urlencoded",
+                "Accept" => "application/json"
+            ]
+        );
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonFragment(['title'   =>  $newTitle])
+            ->assertJsonFragment(['content' =>  $leaf->content]);
     }
 }
