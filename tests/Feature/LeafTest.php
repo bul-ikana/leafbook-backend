@@ -53,4 +53,25 @@ class LeafTest extends TestCase
             ->assertJsonFragment(['title'   =>  $newTitle])
             ->assertJsonFragment(['content' =>  $leaf->content]);
     }
+
+    public function testLeafIsDeleted () {
+        $leaf = factory(Leaf::class)->create();
+
+        $response = $this->delete(
+            'api/leaves/' . $leaf->id,
+            [ "Accept" => "application/json" ]
+        );
+
+        $response
+            ->assertStatus(204);
+
+        $this->assertDatabaseHas('leaves', [
+            'id'            =>  $leaf->id,
+        ]);
+
+        $this->assertDatabaseMissing('leaves', [
+            'id'            =>  $leaf->id,
+            'deleted_at'    =>  null
+        ]);
+    }
 }
