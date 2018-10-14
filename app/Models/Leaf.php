@@ -8,6 +8,7 @@ use App\Models\Book;
 
 class Leaf extends Model
 {
+    protected $database = 'leaves';
     protected $fillable = [
         'title',
         'content',
