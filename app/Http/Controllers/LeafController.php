@@ -47,7 +47,18 @@ class LeafController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $leaf = Leaf::find($id);
+
+        if ( $leaf ) {
+            $leaf->fill($request->all());
+            if ( $leaf->save() ) {
+                return response()->json($leaf, 200);
+            } else {
+                abort(500);
+            }
+        } else {
+            abort(404);
+        }
     }
 
     /**

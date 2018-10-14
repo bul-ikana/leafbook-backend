@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('books/{name}', 'BookController@getBook');
 
 Route::post('books/{name}/leaves', 'LeafController@store');
+Route::put('leaves/{id}', 'LeafController@update');
