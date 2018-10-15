@@ -17,6 +17,6 @@ class Book extends Model
     ];
 
     public function leaves () {
-        return $this->hasMany(Leaf::class);
+        return $this->hasMany(Leaf::class)->orderBy('created_at', 'desc');
     }
 }
